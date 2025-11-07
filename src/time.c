@@ -49,7 +49,12 @@ int time_calcula_saldo_gols(const Time* t) {
     return saldo_gols;
 }
 
-void time_imprime(const Time* t){
+void time_imprime_topo(const Time* t){
+    printf("ID Time         V  E  D  GM GS  S PG\n");
+    printf("-------------------------------------\n")
 
-
+}
+void time_imprime_conteudo(const Time* t){
+    printf("%-2d %-12s %-2d %-2d %-2d %-2d %-2d %-2d %-2d\n",t->id, t->nome, t->vitorias, t->empates,
+           t->derrotas, t->gols_marcados, t->gols_sofridos, time_calcula_saldo_gols(t), time_calcula_pontos(t));
 }
