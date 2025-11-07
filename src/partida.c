@@ -15,5 +15,5 @@ void partida_processa_resultado(const Partida* p, BDTimes* bd_times){
 };
 
 void partida_imprime_detalhes(const Partida* p, const BDTimes* bd_times){
-    
+  return p;  
 };

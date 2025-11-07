@@ -12,13 +12,12 @@ typedef struct BDPartidas{
 
 }BDPartidas;
 
-BDPartidas* bd_partidas_cria();
+BDPartidas* criar_bd_partidas();
 
 void bd_partidas_libera(BDPartidas* bd);
 
 void bd_partidas_consulta(
     const BDPartidas* bd, 
-    const BDTimes* bd_times, 
     const char* prefixo, 
     int modo);
 

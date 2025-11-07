@@ -8,7 +8,7 @@
 #define MAX_PARTIDAS 90
 #define DELIMITADOR ","
 
-Partida* bd_partidas_cria() {
+Partida* pegar_partidas() {
     FILE *file = fopen("Database/partidas_completo.csv", "r");
     if (file == NULL) return NULL;
 

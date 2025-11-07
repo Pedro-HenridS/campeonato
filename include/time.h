@@ -9,7 +9,7 @@
 
 typedef struct Time{
     int id;
-    char nome[20];
+    char *nome;
     int vitorias;
     int empates;
     int derrotas;
@@ -19,12 +19,7 @@ typedef struct Time{
 
 Time* Create_Time(
     int id,
-    char *nome , 
-    int vitorias, 
-    int empates, 
-    int derrotas,
-    int gols_marcados,
-    int gols_sofridos);
+    char *nome );
 
 void time_free(Time* t);
 

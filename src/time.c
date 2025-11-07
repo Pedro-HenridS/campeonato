@@ -6,12 +6,7 @@
 
 Time* Create_Time(
     int id,
-    char *nome , 
-    int vitorias, 
-    int empates, 
-    int derrotas,
-    int gols_marcados,
-    int gols_sofridos)
+    char *nome)
 {
     Time* novo_time = (Time* ) malloc(sizeof(Time));
     if (novo_time == NULL) {
@@ -20,11 +15,6 @@ Time* Create_Time(
     }
     
     novo_time->id = id;
-    novo_time->vitorias = vitorias;
-    novo_time->empates = empates;
-    novo_time->derrotas = derrotas;
-    novo_time->gols_marcados = gols_marcados;
-    novo_time->gols_sofridos = gols_sofridos;
     
     strncpy(novo_time->nome, nome, MAX_NOME_TIME - 1);
     novo_time->nome[MAX_NOME_TIME - 1] = '\0';

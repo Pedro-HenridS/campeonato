@@ -1,43 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/time.h"
 
 #define LINHA_MAX 256
-#define MAX_LINHAS 1000  // limite máximo de linhas
+#define MAX_PARTIDAS 90
+#define DELIMITADOR ","
 
-char **ler(const char *path, int *qtd_linhas) {
-    FILE *file = fopen(path, "r");
-    if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
-        return NULL;
-    }
+Time* get_times() {
+    FILE *file = fopen("Database/times.csv", "r");
+    if (!file) return NULL;
 
-    char **linhas = malloc(MAX_LINHAS * sizeof(char *));
-    if (linhas == NULL) {
-        perror("Erro ao alocar memória");
-        fclose(file);
-        return NULL;
-    }
-
-    char linha[LINHA_MAX];
+    char linha[256];
     int count = 0;
+    Time* times = malloc(MAX_PARTIDAS * sizeof(Time));
+    if (!times) { fclose(file); return NULL; }
 
-    while (fgets(linha, LINHA_MAX, file)) {
-        linha[strcspn(linha, "\n")] = '\0'; // remove quebra de linha
+    fgets(linha, sizeof(linha), file); // pula cabeçalho
 
-        linhas[count] = malloc(strlen(linha) + 1);
-        if (linhas[count] == NULL) {
-            perror("Erro ao alocar linha");
-            break;
-        }
+    while (fgets(linha, sizeof(linha), file) != NULL && count < MAX_PARTIDAS) {
+        linha[strcspn(linha, "\n")] = '\0';
 
-        strcpy(linhas[count], linha);
+        char *token = strtok(linha, ",");
+        if (token != NULL) times[count].id = atoi(token);
+
+        token = strtok(NULL, ",");
+        if (token != NULL) times[count].nome = strdup(token);
+
         count++;
-
-        if (count >= MAX_LINHAS) break; // evita ultrapassar limite
     }
 
     fclose(file);
-    *qtd_linhas = count;
-    return linhas;
+    return times;
 }
+

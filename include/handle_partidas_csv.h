@@ -3,7 +3,7 @@
 #ifndef HANDLE_PARTIDAS_CSV_H
 #define HANDLE_PARTIDAS_CSV_H
 
-Partida* get_partidas();
+Partida* pegar_partidas();
 
 
 #endif
