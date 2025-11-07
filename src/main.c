@@ -33,6 +33,11 @@ switch(escolha){
 int main(int argc, char const *argv[])
 {
     _Menu_Principal();
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> fea7b606187cf2698016de449e27532666be2eba
     return 0;
+    
 }
