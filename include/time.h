@@ -37,7 +37,7 @@ Time* Create_Time(
     buffer->gols_marcados;
     buffer->gols_sofridos;
 
-
+    return buffer;
 }
 
 #endif
