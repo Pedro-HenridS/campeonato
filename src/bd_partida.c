@@ -1,0 +1,16 @@
+#include "..\include\bd_partida.h"
+#include "..\include\handle_partidas_csv.h"
+
+#include <stdlib.h>
+
+
+BDPartidas* bd_partidas_cria(){
+
+    BDPartidas * buffer = (BDPartidas *) malloc(sizeof(bd_partidas_cria));
+
+    if(buffer == NULL) return NULL;
+
+    buffer->partidas = get_partidas();
+
+    return buffer;
+};

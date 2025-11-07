@@ -2,12 +2,17 @@
 #define BD_PARTIDAS_H
 
 #include <bd_time.h>
+#include "partida.h"
+
+#define MAX_PARTIDAS 90
 
 typedef struct BDPartidas{
 
+    Partida * partidas;
+
 }BDPartidas;
 
-BDPartidas* bd_partidas_cria(const char* nome_arquivo, BDTimes* bd_times);
+BDPartidas* bd_partidas_cria();
 
 void bd_partidas_libera(BDPartidas* bd);
 
