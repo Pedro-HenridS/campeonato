@@ -1,32 +1,42 @@
-#include "time.h"
+#include "../include/time.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-Time* Create_Time(int id, const char nome){
 
+Time* Create_Time(
+    int id,
+    char *nome , 
+    int vitorias, 
+    int empates, 
+    int derrotas,
+    int gols_marcados,
+    int gols_sofridos)
+{
     Time* novo_time = (Time* ) malloc(sizeof(Time));
     if (novo_time == NULL) {
         perror("Erro ao alocar memoria para Time");
         exit(EXIT_FAILURE);
     }
+    
     novo_time->id = id;
-    novo_time->vitorias = 0;
-    novo_time->empates = 0;
-    novo_time->derrotas = 0;
-    novo_time->gols_marcados = 0;
-    novo_time->gols_sofridos = 0;
+    novo_time->vitorias = vitorias;
+    novo_time->empates = empates;
+    novo_time->derrotas = derrotas;
+    novo_time->gols_marcados = gols_marcados;
+    novo_time->gols_sofridos = gols_sofridos;
+    
     strncpy(novo_time->nome, nome, MAX_NOME_TIME - 1);
     novo_time->nome[MAX_NOME_TIME - 1] = '\0';
-
+    
+    return novo_time;
 }
 
 void time_libera(Time* t) {
     free(t);
 }
 
-void time_atualiza_tabela(Time* t, int gols_pro, int gols_contra);{
-
+void time_atualiza_tabela(Time* t, int gols_pro, int gols_contra){
     if (gols_pro > gols_contra) {
         t->vitorias = t->vitorias + 1;
     } else if (gols_pro == gols_contra) {
@@ -34,22 +44,30 @@ void time_atualiza_tabela(Time* t, int gols_pro, int gols_contra);{
     } else {
         t->derrotas = t->derrotas +1;
     }
-    t->gols_marcados =gols_marcados + gols_pro;
-    t->gols_sofridos = gols_sofridos + gols_contra;
-
+    t->gols_marcados += gols_pro;
+    t->gols_sofridos += gols_contra;
 }
 
 int time_calcula_pontos(const Time* t) {
-    int pontos = (3*t->vitorias) + t->empates
+    int pontos = (3*t->vitorias) + t->empates;
     return pontos;
 }
 
 int time_calcula_saldo_gols(const Time* t) {
-    int saldo_gols = t->gols_marcados - t->gols_sofridos
+    int saldo_gols = t->gols_marcados - t->gols_sofridos;
     return saldo_gols;
 }
 
 void time_imprime(const Time* t){
-
-
+    if (t == NULL) {
+        printf("Erro: Ponteiro para Time e' NULL.\n");
+        return;
+    }
+    
+    printf("--- Dados do Time ---\n");
+    printf("ID: %d\n", t->id);
+    printf("Nome: %s\n", t->nome);
+    printf("Vitorias: %d, Empates: %d, Derrotas: %d\n", t->vitorias, t->empates, t->derrotas);
+    printf("Gols Marcados: %d, Gols Sofridos: %d\n", t->gols_marcados, t->gols_sofridos);
+    printf("Pontos: %d | Saldo de Gols: %d\n", time_calcula_pontos(t), time_calcula_saldo_gols(t));
 }

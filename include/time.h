@@ -3,9 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <cstdlib>
+#include <stdlib.h>
 
-typedef struct time {
+#define MAX_NOME_TIME 40 
+
+typedef struct Time{
     int id;
     char nome[20];
     int vitorias;
@@ -16,7 +18,8 @@ typedef struct time {
 } Time;
 
 Time* Create_Time(
-    char nome, 
+    int id,
+    char *nome , 
     int vitorias, 
     int empates, 
     int derrotas,
