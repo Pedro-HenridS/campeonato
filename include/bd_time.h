@@ -1,7 +1,7 @@
 #ifndef BD_TIME_H
 #define BD_TIME_H
 
-#include <time.h>
+#include "../include/time.h"
 
 typedef struct BDTimes{
 
