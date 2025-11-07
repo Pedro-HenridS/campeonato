@@ -4,8 +4,19 @@
 #include "partida.h"
 #include "bd_times.h"
 #define MAX_PARTIDAS 90
+#include "..\include\bd_partida.h"
+#include "..\include\handle_partidas_csv.h"
 
-typedef struct bd_partidas {
-    Partida* partidas[MAX_PARTIDAS]; 
-    int num_partidas;
-} BDPartidas;   
+#include <stdlib.h>
+
+
+BDPartidas* bd_partidas_cria(){
+
+    BDPartidas * buffer = (BDPartidas *) malloc(sizeof(bd_partidas_cria));
+
+    if(buffer == NULL) return NULL;
+
+    buffer->partidas = get_partidas();
+
+    return buffer;
+};

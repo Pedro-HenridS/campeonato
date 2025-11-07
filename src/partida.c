@@ -1,6 +1,8 @@
 #include "partida.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <partida.h>
+#include "../include/handle_partidas_csv.h"
 
 Partida* partida_cria(int id, int time1_id, int time2_id, int gols_time1, int gols_time2) {
     Partida* nova_partida = (Partida*) malloc(sizeof(Partida));
@@ -15,7 +17,8 @@ Partida* partida_cria(int id, int time1_id, int time2_id, int gols_time1, int go
     nova_partida->gols_time2 = gols_time2;
     return nova_partida;
 
-}
+    
+};
 
 void partida_libera(Partida* p){
     free(p);
@@ -25,4 +28,6 @@ void partida_processa_resultado(const Partida* p, BDTimes* bd_times){
     
 };
 
-void partida_imprime_detalhes(const Partida* p, const BDTimes* bd_times);
+void partida_imprime_detalhes(const Partida* p, const BDTimes* bd_times){
+    
+};
