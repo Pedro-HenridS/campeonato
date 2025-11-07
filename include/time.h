@@ -36,4 +36,8 @@ int time_calcula_saldo_gols(const Time* t);
 
 void time_imprime(const Time* t);
 
+void time_imprime_topo();
+
+void time_imprime_linha(const Time* t);
+
 #endif

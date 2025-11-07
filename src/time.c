@@ -71,3 +71,21 @@ void time_imprime(const Time* t){
     printf("Gols Marcados: %d, Gols Sofridos: %d\n", t->gols_marcados, t->gols_sofridos);
     printf("Pontos: %d | Saldo de Gols: %d\n", time_calcula_pontos(t), time_calcula_saldo_gols(t));
 }
+
+void time_imprime_topo() {
+    printf("ID Time         V  E  D  GM GS  S PG\n");
+    printf("-------------------------------------\n");
+}
+
+void time_imprime_linha(const Time* t) {
+    printf("%-2d %-12s %-2d %-2d %-2d %-2d %-2d %-2d %-2d\n",
+           t->id,
+           t->nome,
+           t->vitorias,
+           t->empates,
+           t->derrotas,
+           t->gols_marcados,
+           t->gols_sofridos,
+           time_calcula_saldo_gols(t),
+           time_calcula_pontos(t));
+}

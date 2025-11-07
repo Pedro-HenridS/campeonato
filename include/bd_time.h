@@ -2,9 +2,10 @@
 #define BD_TIME_H
 
 #include "../include/time.h"
+#define NUM_TIMES 10
 
 typedef struct BDTimes{
-
+    Time* times[NUM_TIMES];
 }BDTimes;
 
 BDTimes* bd_times_cria(const char* nome_arquivo);
