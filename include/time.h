@@ -40,4 +40,14 @@ Time* Create_Time(
     return buffer;
 }
 
+void time_free(Time* t);
+
+void time_atualiza_tabela(Time* t, int gols_pro, int gols_contra);
+
+int time_calcula_pontos(const Time* t);
+
+int time_calcula_saldo_gols(const Time* t);
+
+void time_imprime(const Time* t);
+
 #endif
