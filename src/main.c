@@ -33,5 +33,7 @@ switch(escolha){
 int main(int argc, char const *argv[])
 {
     _Menu_Principal();
+    
     return 0;
+    
 }
