@@ -12,11 +12,7 @@ typedef struct Partida{
 
 } Partida;
 
-Partida* Partida_criar(){
-    
-}
-
-Partida* partida_cria(int id, int time1_id, int time2_id, int gols_time1, int gols_time2);
+Partida* partida_criar(int id, int time1_id, int time2_id, int gols_time1, int gols_time2);
 
 void partida_libera(Partida* p);
 
