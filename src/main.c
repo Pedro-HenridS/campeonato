@@ -2,12 +2,22 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../include/handle_file.h"
+#include "../include/handle_partidas_csv.h"
 #include "time.h"
 #include "bd_time.h"
 #include "bd_partida.h"
 
+void _Consultar_Time(const BDTimes* bd_times);
+
+int main(){
+    BDTimes* bd_times = bd_times_cria("times.csv");
+    _Menu_Principal();
+    
+    return 0;
+    
+}
 void _Menu_Principal(){
+
     char escolha;
     while (escolha != 'Q'){
         printf("Escolha uma opção\n");
@@ -23,7 +33,7 @@ void _Menu_Principal(){
         char * csv_time = "Database/times.csv";
 
         switch(escolha){
-            case '1': lerCsv(csv_time);
+            case '1': _Consultar_Time();
             break;
             case '2': 
             break;
@@ -35,30 +45,30 @@ void _Menu_Principal(){
 }
 }
 
-void _Consultar_Time(){
+
+
+
+
+
+void _Consultar_Time(const BDTimes* bd_times){
     char nome[50];
     Time* resultados[10];
     printf("Digite o nome do time: ");
-    scanf("%c", &nome);
+    while (getchar() != '\n');
+    if (fgets(nome, MAX_NOME_TIME, stdin) == NULL) {
+        return;
+    }
     nome[strcspn(nome, "\n")] = 0;
-    int quanti_encontrados = bd_times_busca_por_prefixo(lista_times, nome, resultados);
+    int quanti_encontrados = bd_times_busca_por_prefixo(bd_times, nome, resultados);
 
     if(quanti_encontrados > 0){
         time_imprime_topo();
         for(int i = 0, i < quanti_encontrados, i++ ){
-            ptime_imprime_linha(resultados[i]);
+            time_imprime_linha(resultados[i]);
         }
     }
     else{
         printf("Não há nenhum time com esse nome");
     }
 
-}
-
-
-int main(){
-    _Menu_Principal();
-    
-    return 0;
-    
 }

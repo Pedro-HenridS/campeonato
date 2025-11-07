@@ -5,7 +5,7 @@
 #define NUM_TIMES 10
 
 typedef struct BDTimes {
-    Time *times;
+    Time* times[NUM_TIMES];
     int qtd;
     int cap;
 } BDTimes;
@@ -14,8 +14,11 @@ BDTimes* bd_times_cria(const char* nome_arquivo);
 
 void bd_times_libera(BDTimes* bd);
 
+
 Time* bd_times_busca_por_id(const BDTimes* bd, int id);
 
 void bd_times_imprime_tabela(const BDTimes* bd);
+
+int bd_times_busca_por_prefixo(const BDTimes* bd, const char* prefixo, Time* resultados[]);
 
 #endif

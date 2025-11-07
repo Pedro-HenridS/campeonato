@@ -17,14 +17,7 @@ typedef struct Time{
     int gols_sofridos;
 } Time;
 
-Time* Create_Time(
-    int id,
-    char *nome , 
-    int vitorias, 
-    int empates, 
-    int derrotas,
-    int gols_marcados,
-    int gols_sofridos);
+Time* Create_Time(int id, char *nome);
 
 void time_free(Time* t);
 

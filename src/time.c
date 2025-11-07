@@ -4,30 +4,22 @@
 #include <stdio.h>
 
 
-Time* Create_Time(
-    int id,
-    char *nome , 
-    int vitorias, 
-    int empates, 
-    int derrotas,
-    int gols_marcados,
-    int gols_sofridos)
+Time* Create_Time(int id, char *nome)
 {
-    Time* novo_time = (Time* ) malloc(sizeof(Time));
+    Time* novo_time = (Time*) malloc(sizeof(Time));
     if (novo_time == NULL) {
         perror("Erro ao alocar memoria para Time");
         exit(EXIT_FAILURE);
     }
     
     novo_time->id = id;
-    novo_time->vitorias = vitorias;
-    novo_time->empates = empates;
-    novo_time->derrotas = derrotas;
-    novo_time->gols_marcados = gols_marcados;
-    novo_time->gols_sofridos = gols_sofridos;
-    
     strncpy(novo_time->nome, nome, MAX_NOME_TIME - 1);
     novo_time->nome[MAX_NOME_TIME - 1] = '\0';
+    novo_time->vitorias = 0;
+    novo_time->empates = 0;
+    novo_time->derrotas = 0;
+    novo_time->gols_marcados = 0;
+    novo_time->gols_sofridos = 0;
     
     return novo_time;
 }

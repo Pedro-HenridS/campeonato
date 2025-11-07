@@ -9,7 +9,7 @@
 #define LINHA_MAX 256
 #define INITIAL_CAP 64
 
-static char** lerCsv(const char *path, int *num_linhas) {
+/*static char** lerCsv(const char *path, int *num_linhas) {
     FILE *file = fopen(path, "r");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo");
@@ -42,51 +42,67 @@ static char** lerCsv(const char *path, int *num_linhas) {
 
     fclose(file);
     return linhas;
+}*/
+
+static int strncasecmp_c99(const char *s1, const char *s2, size_t n) {
+    if (n == 0) return 0;
+    while (n-- != 0 && *s1 != '\0' && tolower((unsigned char)*s1) == tolower((unsigned char)*s2)) {
+        s1++;
+        s2++;
+    }
+    return (n == (size_t)-1) ? 0 : tolower((unsigned char)*s1) - tolower((unsigned char)*s2);
 }
 
+
 BDTimes* bd_times_cria(const char* nome_arquivo) {
-    int num_linhas = 0;
-    char **linhas = lerCsv(nome_arquivo, &num_linhas);
-    if (!linhas || num_linhas == 0) {
-        fprintf(stderr, "Arquivo vazio ou inexistente: %s\n", nome_arquivo);
-        return NULL;
+    BDTimes* bd = (BDTimes*) malloc(sizeof(BDTimes));
+    if (bd == NULL) {
+        perror("Erro ao alocar memoria para BDTimes");
+        exit(EXIT_FAILURE);
     }
 
-    BDTimes *bd = malloc(sizeof(BDTimes));
-    bd->times = malloc(INITIAL_CAP * sizeof(Time));
-    bd->qtd = 0;
-    bd->cap = INITIAL_CAP;
+    FILE *fp = fopen(nome_arquivo, "r");
+    if (fp == NULL) {
+        perror("Erro ao abrir times.csv");
+        bd_times_libera(bd);
+        exit(EXIT_FAILURE);
+    }
 
-    for (int i = 0; i < num_linhas; i++) {
-        Time t;
+    char line[LINHA_MAX];
+    int count = 0;
+
+    // Ignora o cabeçalho
+    if (fgets(line, LINHA_MAX, fp) == NULL) {
+        fprintf(stderr, "Erro ao ler cabeçalho de times.csv\n");
+        fclose(fp);
+        bd_times_libera(bd);
+        exit(EXIT_FAILURE);
+    }
+
+    while (fgets(line, LINHA_MAX, fp) != NULL && count < NUM_TIMES) {
+        int id;
         char nome[MAX_NOME_TIME];
-
-        // Lê cada linha do CSV:
-        // id,nome,vitorias,empates,derrotas,gols_marcados,gols_sofridos
-        int ok = sscanf(linhas[i], "%d,%49[^,],%d,%d,%d,%d,%d",
-                        &t.id,
-                        nome,
-                        &t.vitorias,
-                        &t.empates,
-                        &t.derrotas,
-                        &t.gols_marcados,
-                        &t.gols_sofridos);
-
-        if (ok == 7) {
-            strncpy(t.nome, nome, MAX_NOME_TIME - 1);
-            t.nome[MAX_NOME_TIME - 1] = '\0';
-
-            if (bd->qtd >= bd->cap) {
-                bd->cap *= 2;
-                bd->times = realloc(bd->times, bd->cap * sizeof(Time));
-            }
-            bd->times[bd->qtd++] = t;
+        
+        // Formato esperado: ID,Nome
+        if (sscanf(line, "%d,%49[^\n]", &id, nome) == 2) {
+            bd->times[count] = Create_Time(id, nome);
+            count++;
+        } else {
+            fprintf(stderr, "Aviso: Linha mal formatada em times.csv: %s", line);
         }
-
-        free(linhas[i]);
     }
 
-    free(linhas);
+    fclose(fp);
+    
+    // Inicializa os ponteiros restantes como NULL, caso o arquivo tenha menos de NUM_TIMES
+    for (int i = count; i < NUM_TIMES; i++) {
+        bd->times[i] = NULL;
+    }
+
+    if (count != NUM_TIMES) {
+        fprintf(stderr, "Aviso: Esperado %d times, encontrado %d em times.csv\n", NUM_TIMES, count);
+    }
+
     return bd;
 }
 
@@ -96,10 +112,10 @@ void bd_times_libera(BDTimes* bd) {
     free(bd);
 }
 
-Time* bd_times_busca_por_id(const BDTimes* bd, int id) {
+/*Time* bd_times_busca_por_id(const BDTimes* bd, int id) {
     if (!bd) return NULL;
     for (int i = 0; i < bd->qtd; i++) {
-        if (bd->times[i].id == id)
+        if (bd->times[i]->id == id)
             return &((Time*)bd->times)[i];
     }
     return NULL;
@@ -120,7 +136,7 @@ void bd_times_imprime_tabela(const BDTimes* bd) {
                t->gols_marcados,
                t->gols_sofridos);
     }
-}
+}*/
 int bd_times_busca_por_prefixo(const BDTimes* bd, const char* prefixo, Time* resultados[]) {
     int count = 0;
     size_t len_prefixo = strlen(prefixo);
