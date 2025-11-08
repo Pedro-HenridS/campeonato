@@ -1,4 +1,8 @@
 #include "../include/roadmap.h"
+#include <time.h>
+#include "../include/bd_time.h"
+#include "../include/find_index.h"
+#include "bd_time.h"
 
 void roadmap2(char *nome, int *modo){
     divider();

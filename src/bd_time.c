@@ -120,8 +120,9 @@ void bd_times_imprime_tabela(const BDTimes* bd) {
     for (int i = 0; i < bd->qtd; i++) {
         Time *t = &bd->times[i];
         int saldo = t->gols_marcados - t->gols_sofridos;
-
-        printf("[%d] %-15s  V:%d  E:%d  D:%d  GM:%d  GS:%d  SG:%d\n",
+        int *pg = (t->vitorias*3) + t->empates;
+        
+        printf("[%d] %-15s  V:%d  E:%d  D:%d  GM:%d  GS:%d  S:%d PG:%d\n",
                t->id,
                t->nome,
                t->vitorias,
@@ -129,6 +130,7 @@ void bd_times_imprime_tabela(const BDTimes* bd) {
                t->derrotas,
                t->gols_marcados,
                t->gols_sofridos,
-               saldo);
+               saldo,
+               pg);
     }
 }

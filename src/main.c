@@ -2,22 +2,19 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <locale.h>
 #include "../include/bd_partida.h"
 #include "../include/handle_partidas_csv.h"
 #include "../include/divider.h"
 #include "../include/roadmap.h"
 
-//Algumas funções foram implementadas já esperando a parte II
-
 void _Menu_Principal() {
     char escolha = ' ';
-
     BDPartidas* partidas = criar_bd_partidas();
     BDTimes* times = criar_bd_times();
 
     char nome[100];
     int modo;
-
     char *csv_time = "Database/times.csv";
 
     while (escolha != 'Q') {
@@ -36,17 +33,13 @@ void _Menu_Principal() {
                 break;
 
             case '2':
-
-                roadmap2(&nome, &modo);
-
+                roadmap2(nome, &modo);
                 bd_partidas_consulta(partidas, nome, modo);
-
                 break;
 
             case '6':
                 get_result(times);
                 bd_times_imprime_tabela(times);
-
                 break;
 
             case 'Q':
@@ -57,12 +50,7 @@ void _Menu_Principal() {
 }
 
 int main() {
+    setlocale(LC_ALL, "");
     _Menu_Principal();
     return 0;
 }
-
-
-/*
-    Pegar cada time preenchido
-    
-*/
