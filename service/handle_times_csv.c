@@ -16,7 +16,7 @@ Time* get_times() {
     Time* times = malloc(MAX_PARTIDAS * sizeof(Time));
     if (!times) { fclose(file); return NULL; }
 
-    fgets(linha, sizeof(linha), file); // pula cabeçalho
+    fgets(linha, sizeof(linha), file); 
 
     while (fgets(linha, sizeof(linha), file) != NULL && count < MAX_PARTIDAS) {
         linha[strcspn(linha, "\n")] = '\0';

@@ -4,11 +4,17 @@
 #include <stdlib.h>
 #include "../include/bd_partida.h"
 #include "../include/handle_partidas_csv.h"
+#include "../include/divider.h"
+#include "../include/roadmap.h"
 
 void _Menu_Principal() {
     char escolha = ' ';
+
     BDPartidas* partidas = criar_bd_partidas();
+
     char nome[100];
+    int modo;
+
     char *csv_time = "Database/times.csv";
 
     while (escolha != 'Q') {
@@ -27,9 +33,11 @@ void _Menu_Principal() {
                 break;
 
             case '2':
-                printf("Escreva o nome do time: ");
-                scanf("%99s", nome);
-                bd_partidas_consulta(partidas, nome, 0);
+
+                roadmap2(&nome, &modo);
+
+                bd_partidas_consulta(partidas, nome, modo);
+
                 break;
 
             case '6':
