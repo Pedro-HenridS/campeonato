@@ -2,9 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "..\include\handle_partidas_csv.h"
+#include "..\include\handle_times_csv.h"
+#include "..\include\time.h"
+#include "..\include\find_index.h"
+#include "time.h"
+#include "bd_time.h"
+#include "../include/find_index.h"
+#include <bd_partida.h>
 
 
-Time* Create_Time(int id, char *nome)
+
+Time* Create_Time(
+    int id,
+    char *nome)
 {
     Time* novo_time = (Time*) malloc(sizeof(Time));
     if (novo_time == NULL) {
@@ -13,6 +24,7 @@ Time* Create_Time(int id, char *nome)
     }
     
     novo_time->id = id;
+    
     strncpy(novo_time->nome, nome, MAX_NOME_TIME - 1);
     novo_time->nome[MAX_NOME_TIME - 1] = '\0';
     novo_time->vitorias = 0;
@@ -81,3 +93,56 @@ void time_imprime_linha(const Time* t) {
            time_calcula_saldo_gols(t),
            time_calcula_pontos(t));
 }
+
+void _Consultar_Time(){
+    char *nome;
+    Time* bd_times = get_times();
+    Time* resultados[NUM_TIMES];
+    int cont = 0;
+
+    printf("Digite o nome do time: ");
+    scanf("%s", nome);
+
+    
+
+    // while (getchar() != '\n');
+    // if (fgets(nome, MAX_NOME_TIME, stdin) == NULL) {
+    //     return;
+    // }
+
+    // nome[strcspn(nome, "\n")] = 0;
+    // int control = 0;
+    
+    // for(int i = 0; i < NUM_TIMES; i++){
+    //     if(findIndex(nome, bd_times[i].nome)== 0){
+    //         if (control == 0){
+    //             time_imprime_topo();
+    //             control = 1;
+    //         }
+    //         for()
+
+    //         cont++;
+            
+    //     }
+    // }
+
+    void atualizar_time(){
+        
+        Time* times = get_times();
+        BDPartidas* partidas = pegar_partidas();
+        
+        for(int i = 0; i<NUM_TIMES; i++){
+            for (int j = 0, j < MAX_PARTIDAS ; i++){
+                if (partidas[j].time1_id == i){
+                    time_atualiza_tabela(Times[i], partid[j].gols_time1, partid[j].gols_time2);
+            }
+                
+                else if (partidas[j].time2_id == i){
+                    time_atualiza_tabela(Times[i], partid[j].gols_time2, partid[j].gols_time1);}
+            }
+            time_calcula_saldo_gols(times[i])
+        }
+    }
+   
+}
+ 

@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdlib.h>
+#include "bd_time.h"
 
 #define MAX_NOME_TIME 40 
 
 typedef struct Time{
     int id;
-    char nome[20];
+    char *nome;
     int vitorias;
     int empates;
     int derrotas;
@@ -17,7 +18,9 @@ typedef struct Time{
     int gols_sofridos;
 } Time;
 
-Time* Create_Time(int id, char *nome);
+Time* Create_Time(
+    int id,
+    char *nome );
 
 void time_free(Time* t);
 
@@ -32,5 +35,7 @@ void time_imprime(const Time* t);
 void time_imprime_topo();
 
 void time_imprime_linha(const Time* t);
+
+void _Consultar_Time()
 
 #endif

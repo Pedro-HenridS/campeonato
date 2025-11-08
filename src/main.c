@@ -2,24 +2,18 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "../include/handle_partidas_csv.h"
-#include "time.h"
-#include "bd_time.h"
-#include "bd_partida.h"
+#include "../include/bd_partida.h"
+#include "../include/handle_partidas_csv.h"
 
-void _Consultar_Time(const BDTimes* bd_times);
+void _Menu_Principal() {
+    char escolha = ' ';
+    BDPartidas* partidas = criar_bd_partidas();
+    char nome[100];
+    char *csv_time = "Database/times.csv";
 
-int main(){
-    BDTimes* bd_times = bd_times_cria("times.csv");
-    _Menu_Principal();
-    
-    return 0;
-    
-}
-void _Menu_Principal(){
-
-    char escolha;
-    while (escolha != 'Q'){
+    while (escolha != 'Q') {
         printf("Escolha uma opção\n");
         printf("1 - Consultar Time\n");
         printf("2 - Consultar Partida\n");
@@ -32,25 +26,28 @@ void _Menu_Principal(){
 
         char * csv_time = "Database/times.csv";
 
-        switch(escolha){
-            case '1': _Consultar_Time();
-            break;
-            case '2': 
-            break;
-            case '6': 
-            break;       
-            case 'Q': printf("Tchauzin");
-            break;
+               switch (escolha) {
+            case '1':
+                break;
+
+            case '2':
+                printf("Escreva o nome do time: ");
+                scanf("%99s", nome);
+                bd_partidas_consulta(partidas, nome, 0);
+                break;
+
+            case '6':
+                break;
+
+            case 'Q':
+                printf("Tchauzin\n");
+                break;
+        }
+    }
 }
-}
-}
 
-
-
-
-
-
-void _Consultar_Time(const BDTimes* bd_times){
+void _Consultar_Time(){
+    get
     char nome[50];
     Time* resultados[10];
     printf("Digite o nome do time: ");
@@ -70,5 +67,9 @@ void _Consultar_Time(const BDTimes* bd_times){
     else{
         printf("Não há nenhum time com esse nome");
     }
-
+}
+ 
+int main(){
+    _Menu_Principal();
+    return 0;
 }

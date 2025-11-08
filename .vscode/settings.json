@@ -2,7 +2,11 @@
   "files.associations": {
     "partida.h": "c",
     "time.h": "c",
-    "bd_partida.h": "c"
+    "bd_partida.h": "c",
+    "handle_partidas_csv.h": "c",
+    "handle_times_csv.h": "c",
+    "find_index.h": "c",
+    "string.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvarsall.bat",
   "C_Cpp_Runner.cCompilerPath": "gcc",
