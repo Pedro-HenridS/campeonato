@@ -1,12 +1,11 @@
 #include <string.h>
 #include "../include/find_index.h"
 
-int findIndex(const char *index, const char *base){
+int findIndex(const char *index, const char *base) {
+    size_t len = strlen(index);
 
-    char *resultado = strstr(base, index);
+    if (strncmp(base, index, len) == 0)
+        return 0;
 
-    if(resultado == NULL)
-        return 1;
-
-    return 0;
+    return 1;
 }
