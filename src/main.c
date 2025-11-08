@@ -7,10 +7,13 @@
 #include "../include/divider.h"
 #include "../include/roadmap.h"
 
+//Algumas funções foram implementadas já esperando a parte II
+
 void _Menu_Principal() {
     char escolha = ' ';
 
     BDPartidas* partidas = criar_bd_partidas();
+    BDTimes* times = criar_bd_times();
 
     char nome[100];
     int modo;
@@ -41,6 +44,9 @@ void _Menu_Principal() {
                 break;
 
             case '6':
+                get_result(times);
+                bd_times_imprime_tabela(times);
+
                 break;
 
             case 'Q':
