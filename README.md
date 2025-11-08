@@ -1,4 +1,4 @@
-# ⚽ Campeonato Computacional de Futebol — Parte I
+# ⚽ Campeonato Computacional de Futebol 
 
 ## 📖 Descrição do Projeto
 Este projeto implementa a **Parte I** de um sistema simplificado de gerenciamento de dados de um campeonato de futebol. O sistema permite **consultar partidas e resultados**, bem como **obter a tabela de pontuação** dos times. Os dados são armazenados em arquivos CSV e carregados em memória por meio de **Tipos Abstratos de Dados (TADs)**, simulando um banco de dados relacional.
@@ -13,15 +13,11 @@ Este projeto implementa a **Parte I** de um sistema simplificado de gerenciament
 ### 🪜 Passos de Execução
 ```bash
 # Clone o repositório
-git clone [SEU_LINK_DO_REPOSITORIO]
-cd [NOME_DO_SEU_REPOSITORIO]
-
-# Preparar os dados
-cp dados/partidas_[CENARIO].csv partidas.csv
-# Substitua [CENARIO] por: vazio | parcial | completo
+git clone [[SEU_LINK_DO_REPOSITORIO]](https://github.com/Pedro-HenridS/campeonato)
+cd campeonato
 
 # Compilar o projeto
-make
+mingw32-make
 
 # Executar o sistema
 ./output/main.exe
@@ -36,33 +32,21 @@ make clean
 ```
 .
 ├── include/
-│   ├── time.h
-│   ├── partida.h
-│   ├── bd_time.h
-│   ├── bd_partida.h
-│   ├── handle_times_csv.h
-│   ├── handle_partidas_csv.h
-│   └── find_index.h
 │
 ├── src/
-│   ├── main.c
-│   ├── time.c
-│   ├── partida.c
-│   ├── bd_time.c
-│   ├── bd_partida.c
-│   ├── handle_times_csv.c
-│   ├── handle_partidas_csv.c
-│   └── find_index.c
 │
-├── dados/
-│   ├── times.csv
-│   ├── partidas_vazio.csv
-│   ├── partidas_parcial.csv
-│   └── partidas_completo.csv
+├── Database/
 │
 ├── output/
+|   └── service.exe
+│   └── src.exe
+|   └── utils.exe
 │   └── main.exe
-│
+|
+├── src/
+|
+├── Utils/
+|
 ├── Makefile
 └── README.md
 ```
@@ -115,22 +99,5 @@ Gerencia o conjunto de todas as partidas.
 | 6 | Imprimir tabela | Exibe tabela de classificação por ID |
 | Q | Sair | Encerra o sistema |
 
-**Total de pontos de funcionalidade:** 9/9
-
 ---
 
-## 🏆 Critérios de Avaliação
-| Critério | Valor | Pontuação |
-|-----------|--------|------------|
-| 1. Funcionalidades | 9 | [PONTUAÇÃO] |
-| 2. Lógica e organização | 2 | [PONTUAÇÃO] |
-| 3. Documentação (README.md) | 2 | [PONTUAÇÃO] |
-| 4. Documentação interna | 1 | [PONTUAÇÃO] |
-| **Total P** | **14** | **[PONTUAÇÃO_P]** |
-| 5. Robustez (R) | [0,1] | [VALOR_R] |
-| 6. Dias de atraso (D) | — | [VALOR_D] |
-
-**Fórmula:**  
-```
-nota = (1 − (3/2)D − 1) × R × P
-```
