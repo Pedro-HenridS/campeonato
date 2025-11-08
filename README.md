@@ -1,181 +1,136 @@
+# ⚽ Campeonato Computacional de Futebol — Parte I
 
-📄 README.md - Campeonato Computacional de Futebol (Parte I)
-Este template de README.md está estruturado para atender aos requisitos de documentação interna e de execução solicitados para a Parte I do Trabalho de Programação.
+## 📖 Descrição do Projeto
+Este projeto implementa a **Parte I** de um sistema simplificado de gerenciamento de dados de um campeonato de futebol. O sistema permite **consultar partidas e resultados**, bem como **obter a tabela de pontuação** dos times. Os dados são armazenados em arquivos CSV e carregados em memória por meio de **Tipos Abstratos de Dados (TADs)**, simulando um banco de dados relacional.
 
-⚽ Campeonato Computacional de Futebol (Parte I)
-Este projeto implementa a primeira parte de um sistema simplificado de gerenciamento de dados de um campeonato de futebol, focado na consulta de partidas e resultados e na obtenção da tabela de pontuação.
+---
 
-A entrega simula um banco de dados relacional usando dois arquivos CSV para persistência de dados, que são carregados em memória usando Tipos Abstratos de Dados (TADs).
+## 🚀 Como Executar
+### 🧩 Pré-requisitos
+- **GCC** (versão 11 ou superior)
+- **Make**
 
-🚀 Como Executar o Projeto
-O programa foi desenvolvido para ser compilado e executado em ambiente Linux Ubuntu 22.04 com GCC 11, conforme recomendado.
-
-Pré-requisitos
-Compilador GCC (versão 11 ou superior)
-
-Ferramenta Make
-
-Passos de Execução
-Clone o repositório:
-
-Bash
+### 🪜 Passos de Execução
+```bash
+# Clone o repositório
 git clone [SEU_LINK_DO_REPOSITORIO]
 cd [NOME_DO_SEU_REPOSITORIO]
-Preparação dos Dados: Os arquivos de dados para teste (times.csv, partidas_vazio.csv, partidas_parcial.csv, partidas_completo.csv) devem estar disponíveis na estrutura de diretórios do projeto.
 
-
-➡️ Ação Necessária: Antes de compilar, ajuste o arquivo partidas.csv para um dos cenários de teste disponíveis (vazio, parcial ou completo).
-
-Bash
+# Preparar os dados
 cp dados/partidas_[CENARIO].csv partidas.csv
-# Substitua [CENARIO] por vazio, parcial ou completo.
-Compilação do Projeto: Utilize o Makefile fornecido para compilar todos os módulos e gerar o executável.
+# Substitua [CENARIO] por: vazio | parcial | completo
 
-Bash
+# Compilar o projeto
 make
-Execução do Sistema: O executável main.exe será criado no diretório output/.
 
-Bash
+# Executar o sistema
 ./output/main.exe
-Limpeza (Opcional): Para remover os arquivos objeto (.o) e o executável, use:
 
-Bash
+# Limpar arquivos compilados (opcional)
 make clean
-🧱 Estrutura do Repositório
-O projeto segue uma estrutura modular clara, com o código principal em main.c  e os TADs e serviços distribuídos em diretórios:
+```
 
+---
+
+## 🧱 Estrutura de Diretórios
+```
 .
 ├── include/
 │   ├── time.h
-│   └── partida.h
+│   ├── partida.h
+│   ├── bd_time.h
+│   ├── bd_partida.h
+│   ├── handle_times_csv.h
+│   ├── handle_partidas_csv.h
+│   └── find_index.h
+│
 ├── src/
-│   ├── main.c           # Programa principal e menu.
-│   ├── bd_time.c        # Implementação do TAD BDTimes.
-│   ├── bd_partida.c     # Implementação do TAD BDPartidas.
-│   ├── time.c           # Implementação do TAD Time.
-│   └── partida.c        # Implementação do TAD Partida.
-├── service/
-│   └── handle_file.c    # Funções de manipulação de arquivos CSV.
-├── dados/               # Diretório para dados de teste
+│   ├── main.c
+│   ├── time.c
+│   ├── partida.c
+│   ├── bd_time.c
+│   ├── bd_partida.c
+│   ├── handle_times_csv.c
+│   ├── handle_partidas_csv.c
+│   └── find_index.c
+│
+├── dados/
+│   ├── times.csv
+│   ├── partidas_vazio.csv
+│   ├── partidas_parcial.csv
+│   └── partidas_completo.csv
+│
+├── output/
+│   └── main.exe
+│
 ├── Makefile
 └── README.md
-➡️ Ação Necessária: Ajuste os nomes dos arquivos .c e .h acima para refletir a sua implementação exata, se for diferente.
+```
 
-🧩 Tipos Abstratos de Dados (TADs)
-A modularização é um requisito central do projeto. Os dados são gerenciados por quatro TADs principais:
+---
 
-1. TAD Time
-Campo/Estatística	Descrição
-ID, Nome	
-Dados de identificação lidos de times.csv.
+## 🧩 Tipos Abstratos de Dados (TADs)
+### 1. `Time`
+| Campo | Descrição |
+|--------|------------|
+| ID, Nome | Identificação do time (de `times.csv`) |
+| V, E, D | Vitórias, Empates e Derrotas |
+| GM, GS | Gols Marcados e Sofridos |
+| PG | Pontos Ganhos (3×V + E) |
+| S | Saldo de Gols (GM − GS) |
 
-V, E, D	
-Vitórias, Empates e Derrotas (calculadas).
+### 2. `Partida`
+| Campo | Descrição |
+|--------|------------|
+| ID | Identificador da partida |
+| Time1, Time2 | IDs dos times participantes |
+| GolsTime1, GolsTime2 | Gols marcados por cada time |
 
-GM, GS	
-Gols Marcados e Gols Sofridos (acumulados).
+### 3. `BDTimes`
+Gerencia o conjunto de todos os times.
+- Carrega os dados de `times.csv`
+- Permite buscar, listar e atualizar estatísticas
+- Estrutura interna: vetor estático de `Time`
 
-PG	
-Pontos Ganhos (3V+E) (calculado sob demanda).
+### 4. `BDPartidas`
+Gerencia o conjunto de todas as partidas.
+- Carrega os dados de `partidas.csv`
+- Permite consultas e listagem de resultados
+- Estrutura interna: vetor estático de `Partida`
 
-S	
-Saldo de Gols (GM−GS) (calculado sob demanda).
+---
 
-2. TAD Partida
-Campo	Descrição
-ID	
-Identificador único da partida.
+## ⚙️ Decisões de Implementação
+**Estrutura de Dados:** Vetores estáticos de structs pela simplicidade e previsibilidade de memória.  
+**Leitura de CSV:** Uso de `fgets`, `strtok`, `strcspn` e `atoi` para leitura controlada.  
+**Busca por Prefixo:** Implementada com `strncmp`, verificando se o nome começa com o prefixo informado.
 
-Time1, Time2	
-IDs dos times participantes.
+---
 
-GolsTime1, GolsTime2	
-Quantidade de gols marcados.
+## 📋 Funcionalidades Implementadas
+| Opção | Funcionalidade | Descrição |
+|--------|----------------|------------|
+| 1 | Consultar time | Busca por prefixo do nome e exibe estatísticas completas |
+| 2 | Consultar partidas | Busca partidas por prefixo (mandante, visitante ou ambos) |
+| 6 | Imprimir tabela | Exibe tabela de classificação por ID |
+| Q | Sair | Encerra o sistema |
 
-3. TAD BDTimes
+**Total de pontos de funcionalidade:** 9/9
 
-Responsabilidade: Gerencia a coleção de todos os TADs Time.
+---
 
+## 🏆 Critérios de Avaliação
+| Critério | Valor | Pontuação |
+|-----------|--------|------------|
+| 1. Funcionalidades | 9 | [PONTUAÇÃO] |
+| 2. Lógica e organização | 2 | [PONTUAÇÃO] |
+| 3. Documentação (README.md) | 2 | [PONTUAÇÃO] |
+| 4. Documentação interna | 1 | [PONTUAÇÃO] |
+| **Total P** | **14** | **[PONTUAÇÃO_P]** |
+| 5. Robustez (R) | [0,1] | [VALOR_R] |
+| 6. Dias de atraso (D) | — | [VALOR_D] |
 
-Ações: Carregar dados iniciais de times.csv , buscar, listar e atualizar estatísticas de um time.
-
-Estrutura Interna: Vetor estático de structs Time* (Ponteiros para TAD Time). [Ajuste se usar outra estrutura]
-
-4. TAD BDPartidas
-
-Responsabilidade: Gerencia a coleção de todos os TADs Partida.
-
-
-Ações: Carregar dados iniciais de partidas.csv , fornecer acesso estruturado aos resultados para cálculo de estatísticas.
-
-Estrutura Interna: Vetor estático de structs Partida* (Ponteiros para TAD Partida). [Ajuste se usar outra estrutura]
-
-⚙️ Decisões de Implementação
-Aqui você deve detalhar as escolhas técnicas cruciais feitas durante o desenvolvimento.
-
-1. Estrutura de Dados
-Decisão: O TAD BDTimes e o TAD BDPartidas utilizam vetores estáticos de ponteiros para as structs Time e Partida.
-
-
-Justificativa: Essa escolha é baseada na simplicidade de implementação e na previsibilidade do consumo de memória, conforme sugerido pelo enunciado para esta primeira parte.
-
-2. Leitura de Arquivos CSV
-Decisão: Para ler os arquivos CSV linha por linha e token por token, as funções fgets, strcspn, strtok e atoi foram utilizadas.
-
-
-Justificativa: Esta combinação de funções C padrão oferece controle granular sobre a leitura da linha, tratamento de strings e conversão segura para tipos inteiros, o que é fundamental para a robustez.
-
-3. Implementação da Busca (Prefixos)
-Decisão: A busca por nome de time (para opções 1 e 2 do menu) é realizada comparando o prefixo fornecido pelo usuário com o nome completo do time, utilizando a função strncmp (ou similar).
-
-
-Justificativa: Isso garante que a funcionalidade "suporte a pesquisa por prefixo", permitindo que, por exemplo, "NET" encontre "NETunos".
-
-➡️ Ação Necessária: Complete esta seção com suas próprias decisões, como:
-
-Como você lidou com a alocação dinâmica (ex: malloc) dentro dos TADs?
-
-Detalhes sobre a modularização (como os TADs BDPartidas e BDTimes se comunicam para o cálculo das estatísticas).
-
-📋 Funcionalidades Implementadas (Parte I)
-As seguintes funcionalidades, requeridas para esta entrega, foram implementadas e testadas:
-
-Opção	Funcionalidade	Descrição	Pontos (Critério 1)
-1	Consultar time	
-Permite buscar um time por prefixo do nome e exibe todas as suas estatísticas (V, E, D, GM, GS, S, PG).
-
-3
-2	Consultar partidas	
-Permite buscar partidas por prefixo do nome do time mandante, visitante ou ambos.
-
-3
-6	Imprimir tabela	
-Exibe a tabela completa de classificação com todas as estatísticas, ordenada pelo ID do time (sem ordenação por PG nesta parte).
-
-3
-Q	Sair	
-Encerra a execução do sistema.
-
--
-
-Total de Pontos de Funcionalidade: 9/9 
-
-🏆 Critérios de Avaliação (Pontuação)
-Critério	Valor	Pontuação Obtida
-1. Funcionalidades (9 pontos)	9	[PONTUAÇÃO]
-2. Lógica e organização (2 pontos)	2	[PONTUAÇÃO]
-3. Documentação README.md (2 pontos)	2	[PONTUAÇÃO]
-4. Documentação Interna (1 ponto)	1	[PONTUAÇÃO]
-Total P (Critérios 1-4)	14	[PONTUAÇÃO_P]
-5. Robustez (R)	[0, 1]	[VALOR_R]
-6. Dias de Atraso (D)	-	[VALOR_D]
-
-Fórmula da Nota Final: nota=(1− 
-31
-2 
-D
- −1
-​
- )×R×P 
-
-➡️ Ação Necessária: Preencha os campos [PONTUAÇÃO], [PONTUAÇÃO_P], [VALOR_R] e [VALOR_D] após a finalização e teste do projeto.
+**Fórmula:**  
+```
+nota = (1 − (3/2)D − 1) × R × P
+```
